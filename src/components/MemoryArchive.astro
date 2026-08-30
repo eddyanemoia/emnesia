@@ -1,0 +1,68 @@
+---
+const { posts = [] } = Astro.props;
+const years = [...new Set(posts.map((post) => new Date(post.date).getFullYear()))].sort((a, b) => b - a);
+const fallbackYear = new Date().getFullYear();
+const yearList = years.length ? years : [fallbackYear];
+---
+
+<section class="module module--archive" id="archive" aria-labelledby="archive-title" data-memory-archive>
+  <div class="module__rim"></div>
+  <header class="module__header">
+    <span class="module__eyebrow" id="archive-title">MEMORY / ARCHIVE</span>
+    <span class="module__tiny">STORED FILES</span>
+  </header>
+
+  <div class="archive-controls">
+    <button class="micro-button micro-button--small" type="button" data-year-prev aria-label="Previous archive year">‹</button>
+    <div class="lcd lcd--pale archive-year" aria-live="polite">
+      <span>YEAR</span>
+      <strong data-year-label>{yearList[0]}</strong>
+    </div>
+    <button class="micro-button micro-button--small" type="button" data-year-next aria-label="Next archive year">›</button>
+  </div>
+
+  <div class="lcd lcd--dark archive-list">
+    {posts.length > 0 ? posts.slice(0, 12).map((post) => (
+      <a class="archive-entry" href={post.href} data-archive-entry data-year={new Date(post.date).getFullYear()}>
+        <span>{new Intl.DateTimeFormat('en-US', { month: '2-digit', day: '2-digit' }).format(new Date(post.date))}</span>
+        <strong>{post.title}</strong>
+      </a>
+    )) : (
+      <div class="archive-empty">MEMORY BANK EMPTY</div>
+    )}
+  </div>
+
+  <a class="hardware-link" href="/blog/">OPEN FULL ARCHIVE <span>↗</span></a>
+
+  <div class="archive-years" hidden>{yearList.map((year) => <span data-year-value>{year}</span>)}</div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-memory-archive]').forEach((root) => {
+    const years = [...root.querySelectorAll('[data-year-value]')].map((node) => node.textContent?.trim()).filter(Boolean);
+    const entries = [...root.querySelectorAll('[data-archive-entry]')];
+    const label = root.querySelector('[data-year-label]');
+    const prev = root.querySelector('[data-year-prev]');
+    const next = root.querySelector('[data-year-next]');
+    if (!years.length) return;
+    let index = 0;
+
+    const render = () => {
+      const year = years[index];
+      if (label) label.textContent = year;
+      let visible = 0;
+      entries.forEach((entry) => {
+        const show = entry.getAttribute('data-year') === year && visible < 4;
+        entry.toggleAttribute('hidden', !show);
+        if (show) visible += 1;
+      });
+      root.classList.remove('is-refreshing');
+      void root.offsetWidth;
+      root.classList.add('is-refreshing');
+    };
+
+    prev?.addEventListener('click', () => { index = (index - 1 + years.length) % years.length; render(); });
+    next?.addEventListener('click', () => { index = (index + 1) % years.length; render(); });
+    render();
+  });
+</script>

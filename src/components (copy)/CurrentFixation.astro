@@ -1,0 +1,54 @@
+<section class="module module--fixation" aria-labelledby="fixation-title" data-fixation>
+  <div class="module__rim"></div>
+  <header class="module__header">
+    <span class="module__eyebrow" id="fixation-title">CURRENT FIXATION</span>
+    <span class="module__tiny">OBJECT VIEWER</span>
+  </header>
+
+  <div class="fixation-viewer">
+    <div class="fixation-stage" aria-hidden="true">
+      <div class="fixation-object fixation-object--orb is-active" data-fixation-object="0"><span></span></div>
+      <div class="fixation-object fixation-object--disc" data-fixation-object="1"><span></span></div>
+      <div class="fixation-object fixation-object--capsule" data-fixation-object="2"><span></span></div>
+    </div>
+
+    <div class="lcd lcd--pale fixation-caption" aria-live="polite">
+      <span data-fixation-kind>OBJECT 01</span>
+      <strong data-fixation-name>replace with a fixation</strong>
+      <small data-fixation-note>image/object slot</small>
+    </div>
+
+    <div class="fixation-controls">
+      <button class="micro-button micro-button--small" type="button" data-fix-prev aria-label="Previous fixation">‹</button>
+      <div class="page-dots"><i class="is-active"></i><i></i><i></i></div>
+      <button class="micro-button micro-button--small" type="button" data-fix-next aria-label="Next fixation">›</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-fixation]').forEach((root) => {
+    const items = [
+      ['OBJECT 01', 'replace with a fixation', 'image/object slot'],
+      ['OBJECT 02', 'second fixation', 'swap in any image later'],
+      ['OBJECT 03', 'third fixation', 'anything can live here'],
+    ];
+    const objects = [...root.querySelectorAll('[data-fixation-object]')];
+    const dots = [...root.querySelectorAll('.page-dots i')];
+    const kind = root.querySelector('[data-fixation-kind]');
+    const name = root.querySelector('[data-fixation-name]');
+    const note = root.querySelector('[data-fixation-note]');
+    let index = 0;
+
+    const render = () => {
+      objects.forEach((object, i) => object.classList.toggle('is-active', i === index));
+      dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+      if (kind) kind.textContent = items[index][0];
+      if (name) name.textContent = items[index][1];
+      if (note) note.textContent = items[index][2];
+    };
+
+    root.querySelector('[data-fix-prev]')?.addEventListener('click', () => { index = (index - 1 + items.length) % items.length; render(); });
+    root.querySelector('[data-fix-next]')?.addEventListener('click', () => { index = (index + 1) % items.length; render(); });
+  });
+</script>

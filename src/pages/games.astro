@@ -1,0 +1,14 @@
+---
+import EmnesiaShell from '../components/EmnesiaShell.astro';
+const today = new Intl.DateTimeFormat('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' }).format(new Date());
+---
+<EmnesiaShell activePath="/games/" version="0.1.0" lastUpdated={today}>
+  <section class="module module--page-intro">
+    <div class="module__rim"></div>
+    <header class="module__header"><span class="module__eyebrow">GAMES MODULE</span><span class="module__tiny">PLACEHOLDER</span></header>
+    <div class="lcd lcd--pale page-copy">
+      <h1>GAMES</h1>
+      <p>This section exists so the navigation already works in Version 1. We can art-direct and fill it properly after the homepage system is approved.</p>
+    </div>
+  </section>
+</EmnesiaShell>

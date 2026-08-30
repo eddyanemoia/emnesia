@@ -1,0 +1,29 @@
+---
+const { posts = [] } = Astro.props;
+const formatDate = (value) => new Intl.DateTimeFormat('en-US', {
+  month: '2-digit', day: '2-digit', year: '2-digit'
+}).format(new Date(value));
+---
+
+<section class="module module--transmissions" aria-labelledby="latest-title">
+  <div class="module__rim"></div>
+  <header class="module__header">
+    <span class="module__eyebrow" id="latest-title">LATEST TRANSMISSIONS</span>
+    <span class="module__tiny">FEED / {String(posts.length).padStart(2, '0')}</span>
+  </header>
+
+  <div class="lcd lcd--dark transmission-feed">
+    {posts.length > 0 ? posts.map((post, index) => (
+      <a class="transmission-row" href={post.href}>
+        <span class="transmission-row__date">{formatDate(post.date)}</span>
+        <span class="transmission-row__title">{post.title}</span>
+        <span class="transmission-row__index">{String(index + 1).padStart(2, '0')}</span>
+      </a>
+    )) : (
+      <div class="transmission-empty">
+        <span>NO TRANSMISSIONS YET</span>
+        <small>drop a post into src/content/blog/</small>
+      </div>
+    )}
+  </div>
+</section>

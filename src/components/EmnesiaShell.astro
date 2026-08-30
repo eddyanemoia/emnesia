@@ -1,0 +1,71 @@
+---
+import AmbientField from './AmbientField.astro';
+import EmnesiaLogo from './EmnesiaLogo.astro';
+import Navigation from './Navigation.astro';
+import EmnesiaFooter from './EmnesiaFooter.astro';
+import '../styles/emnesia.css';
+
+const {
+  activePath = '/',
+  version = '0.1.0',
+  lastUpdated = '—',
+} = Astro.props;
+---
+
+<main class="emnesia-page" data-emnesia-root>
+  <AmbientField />
+
+  <div class="emnesia-device-wrap">
+    <section class="emnesia-device">
+      <div class="device-gloss" aria-hidden="true"></div>
+      <div class="device-inner-line" aria-hidden="true"></div>
+
+      <header class="device-header">
+        <EmnesiaLogo />
+        <Navigation activePath={activePath} />
+      </header>
+
+      <div class="device-body">
+        <slot />
+      </div>
+
+      <EmnesiaFooter version={version} lastUpdated={lastUpdated} />
+    </section>
+  </div>
+
+  <div class="page-refresh" aria-hidden="true"></div>
+</main>
+
+<script>
+  const root = document.querySelector('[data-emnesia-root]');
+  if (root && !root.hasAttribute('data-initialized')) {
+    root.setAttribute('data-initialized', 'true');
+
+    const objects = [...root.querySelectorAll('[data-depth]')];
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReduced && window.matchMedia('(pointer: fine)').matches) {
+      root.addEventListener('pointermove', (event) => {
+        const x = (event.clientX / window.innerWidth - 0.5) * 2;
+        const y = (event.clientY / window.innerHeight - 0.5) * 2;
+        objects.forEach((object) => {
+          const depth = Number(object.getAttribute('data-depth') || 0.15);
+          object.style.setProperty('--px', `${x * depth * 28}px`);
+          object.style.setProperty('--py', `${y * depth * 22}px`);
+        });
+      }, { passive: true });
+    }
+
+    root.querySelectorAll('a[href]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const anchor = event.currentTarget;
+        if (!(anchor instanceof HTMLAnchorElement)) return;
+        const url = new URL(anchor.href, window.location.href);
+        if (url.origin !== window.location.origin || anchor.target === '_blank' || url.hash) return;
+        event.preventDefault();
+        root.classList.add('is-navigating');
+        window.setTimeout(() => { window.location.href = url.href; }, prefersReduced ? 0 : 145);
+      });
+    });
+  }
+</script>
