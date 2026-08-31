@@ -2,31 +2,34 @@
 import AmbientField from './AmbientField.astro';
 import EmnesiaLogo from './EmnesiaLogo.astro';
 import Navigation from './Navigation.astro';
+import ScenicBanner from './ScenicBanner.astro';
 import EmnesiaFooter from './EmnesiaFooter.astro';
 import '../styles/emnesia.css';
 
 const {
   activePath = '/',
-  version = '0.1.0',
+  version = '0.2.0',
   lastUpdated = '—',
 } = Astro.props;
 ---
 
-<main class="emnesia-page" data-emnesia-root>
+<main class="emnesia-page emnesia-page--v2" data-emnesia-root>
   <AmbientField />
 
-  <div class="emnesia-device-wrap">
-    <section class="emnesia-device">
-      <div class="device-gloss" aria-hidden="true"></div>
-      <div class="device-inner-line" aria-hidden="true"></div>
+  <div class="v2-chassis-wrap">
+    <section class="v2-chassis">
+      <div class="v2-chassis__outer-gloss" aria-hidden="true"></div>
+      <div class="v2-chassis__groove v2-chassis__groove--top" aria-hidden="true"></div>
+      <div class="v2-chassis__groove v2-chassis__groove--bottom" aria-hidden="true"></div>
 
-      <header class="device-header">
-        <EmnesiaLogo />
-        <Navigation activePath={activePath} />
+      <header class="v2-header">
+        <div class="v2-header__logo-pocket"><EmnesiaLogo /></div>
+        <div class="v2-header__banner-pocket"><ScenicBanner /></div>
       </header>
 
-      <div class="device-body">
-        <slot />
+      <div class="v2-chassis__main">
+        <aside class="v2-chassis__nav-pocket"><Navigation activePath={activePath} /></aside>
+        <div class="v2-chassis__content"><slot /></div>
       </div>
 
       <EmnesiaFooter version={version} lastUpdated={lastUpdated} />
@@ -40,7 +43,6 @@ const {
   const root = document.querySelector('[data-emnesia-root]');
   if (root && !root.hasAttribute('data-initialized')) {
     root.setAttribute('data-initialized', 'true');
-
     const objects = [...root.querySelectorAll('[data-depth]')];
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -50,8 +52,8 @@ const {
         const y = (event.clientY / window.innerHeight - 0.5) * 2;
         objects.forEach((object) => {
           const depth = Number(object.getAttribute('data-depth') || 0.15);
-          object.style.setProperty('--px', `${x * depth * 28}px`);
-          object.style.setProperty('--py', `${y * depth * 22}px`);
+          object.style.setProperty('--px', `${x * depth * 14}px`);
+          object.style.setProperty('--py', `${y * depth * 10}px`);
         });
       }, { passive: true });
     }
@@ -64,7 +66,7 @@ const {
         if (url.origin !== window.location.origin || anchor.target === '_blank' || url.hash) return;
         event.preventDefault();
         root.classList.add('is-navigating');
-        window.setTimeout(() => { window.location.href = url.href; }, prefersReduced ? 0 : 145);
+        window.setTimeout(() => { window.location.href = url.href; }, prefersReduced ? 0 : 155);
       });
     });
   }

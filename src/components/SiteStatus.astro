@@ -3,8 +3,8 @@ const { postCount = 0, lastUpdated = '—', version = '0.1.0' } = Astro.props;
 ---
 
 <section class="module module--status" id="site-status" aria-labelledby="site-status-title">
-  <div class="module__rim"></div>
-  <header class="module__header">
+  <header class="module__header module__header--plate">
+    <span class="utility-badge utility-badge--lavender" aria-hidden="true">⌁</span>
     <span class="module__eyebrow" id="site-status-title">SITE STATUS</span>
     <span class="indicator indicator--lavender" aria-hidden="true"></span>
   </header>
