@@ -1,8 +1,16 @@
 media:
-  input: public/images
-  output: /images
-  rename: safe
-  categories: [image]
+  - name: site_images
+    label: Site images
+    input: public/images
+    output: /images
+    rename: safe
+    categories: [image]
+  - name: blog_assets
+    label: Blog cover assets
+    input: src/assets
+    output: ../../assets
+    rename: safe
+    categories: [image]
 
 content:
   - name: site
@@ -83,6 +91,9 @@ content:
                 label: Image
                 type: image
                 required: false
+                options:
+                  media: site_images
+                  rename: safe
               - name: imageAlt
                 label: Image description
                 type: string
@@ -315,3 +326,57 @@ content:
               - name: microLabel
                 label: Small label
                 type: string
+
+  - name: blog_posts
+    label: Blog Posts
+    type: collection
+    path: src/content/blog
+    format: yaml-frontmatter
+    subfolders: false
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      fields: [title, pubDate, description]
+      primary: title
+      sort: [pubDate, title]
+      search: [title, description]
+      default:
+        sort: pubDate
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+        required: true
+      - name: pubDate
+        label: Publish date
+        type: date
+        required: true
+        options:
+          time: false
+          format: "MMM dd yyyy"
+      - name: heroImage
+        label: Cover image
+        type: image
+        required: false
+        description: Optional image shown with the post. Existing Astro assets can be selected here.
+        options:
+          media: blog_assets
+          extensions: [jpg, jpeg, png, webp, gif]
+          rename: safe
+      - name: body
+        label: Post body
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+          media: site_images
+          path: blog
+          rename: safe
+
