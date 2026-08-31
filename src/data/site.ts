@@ -9,7 +9,7 @@
 export const site = {
   logo: 'EMNESIA',
   tagline: 'personal internet archive // 2026',
-  version: '0.2.1',
+  version: '0.2.2',
 
   nav: [
     { href: '/', label: 'Home', icon: 'home', tone: 'cyan' },
