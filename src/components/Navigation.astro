@@ -32,9 +32,13 @@ const iconMap = {
         style={`--nav-index:${index}`}
       >
         <span class="v2-nav__well" aria-hidden="true">
-          <img src={icon.src} alt="" width="256" height="256" loading="eager" decoding="async" />
+          <span class="v2-nav__object">
+            <img src={icon.src} alt="" width="256" height="256" loading="eager" decoding="async" />
+          </span>
         </span>
-        <span class="v2-nav__label">{item.label}</span>
+        <span class="v2-nav__label" aria-hidden="true">
+          <span class="v2-nav__label-text">{item.label}</span>
+        </span>
       </a>
     );
   })}

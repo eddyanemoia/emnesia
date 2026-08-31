@@ -17,10 +17,21 @@ const pages = [copy.entries.slice(0, 2), copy.entries.slice(2, 4), copy.entries.
       {pages.map((page, pageIndex) => (
         <div class:list={['currently-screen__page', pageIndex === 0 && 'is-active']} data-current-page>
           {page.map((entry) => (
-            <div class="currently-screen__item">
-              <span class="lcd-kicker">{entry.label}</span>
-              <strong>{entry.value}</strong>
-            </div>
+           <div class="currently-screen__item">
+  <div class="currently-screen__copy">
+    <span class="lcd-kicker">{entry.label}</span>
+    <strong>{entry.value}</strong>
+  </div>
+
+  {entry.image && (
+    <img
+      class="currently-screen__image"
+      src={entry.image}
+      alt={entry.imageAlt ?? entry.value}
+      loading="lazy"
+    />
+  )}
+</div>
           ))}
           {pageIndex === pages.length - 1 && <span class="currently-screen__micro">{copy.finalNote}</span>}
         </div>
