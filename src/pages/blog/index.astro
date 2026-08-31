@@ -1,17 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
 import EmnesiaShell from '../../components/EmnesiaShell.astro';
+import { site } from '../../data/site';
 
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
 );
 const today = new Intl.DateTimeFormat('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' }).format(new Date());
+const page = site.pages.blog;
 ---
 
-<EmnesiaShell activePath="/blog/" version="0.1.0" lastUpdated={today}>
+<EmnesiaShell activePath="/blog/" version={site.version} lastUpdated={today}>
   <section class="module module--page-intro">
     <div class="module__rim"></div>
-    <header class="module__header"><span class="module__eyebrow">TRANSMISSION ARCHIVE</span><span class="module__tiny">ALL POSTS</span></header>
+    <header class="module__header"><span class="module__eyebrow">{page.eyebrow}</span><span class="module__tiny">{page.microLabel}</span></header>
     <div class="lcd lcd--dark blog-archive-list">
       {allPosts.map((post, index) => (
         <a class="transmission-row" href={`/blog/${post.id.replace(/\.(md|mdx)$/i, '')}/`}>

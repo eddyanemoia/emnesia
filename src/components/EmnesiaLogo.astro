@@ -1,8 +1,34 @@
-<div class="v2-logo" aria-label="Emnesia">
-  <div class="v2-logo__plate">
-    <span class="v2-logo__shine" aria-hidden="true"></span>
-    <span class="v2-logo__word" aria-hidden="true">EMNESIA</span>
-    <span class="v2-logo__ghost" aria-hidden="true">EMNESIA</span>
+---
+import logoSky from '../assets/emnesia-logo-sky.png';
+import { site } from '../data/site';
+
+const letters = Array.from(site.logo);
+const floatPattern = [
+  { x: -2, y: 2, r: -2.3, s: 1.01 },
+  { x: 1, y: -1, r: 1.2, s: .99 },
+  { x: 0, y: 2, r: -1.1, s: 1.02 },
+  { x: 2, y: -2, r: .8, s: 1 },
+  { x: -1, y: 1, r: -1.5, s: 1.015 },
+  { x: 1, y: -1, r: 1.6, s: .995 },
+  { x: 2, y: 2, r: -.6, s: 1.01 },
+];
+---
+
+<div class="v21-logo" aria-label={site.logo} style={`--logo-sky:url("${logoSky.src}")`}>
+  <div class="v21-logo__sky" aria-hidden="true"></div>
+  <div class="v21-logo__haze" aria-hidden="true"></div>
+  <div class="v21-logo__word" aria-hidden="true">
+    {letters.map((letter, index) => {
+      const float = floatPattern[index % floatPattern.length];
+      return (
+        <span
+          class="v21-logo__letter"
+          style={`--lx:${float.x}px;--ly:${float.y}px;--lr:${float.r}deg;--ls:${float.s};--ld:${index * -0.45}s`}
+        >
+          <span class="v21-logo__letter-face">{letter}</span>
+        </span>
+      );
+    })}
   </div>
-  <span class="v2-logo__subline">personal internet archive // 2026</span>
+  <span class="v21-logo__subline">{site.tagline}</span>
 </div>

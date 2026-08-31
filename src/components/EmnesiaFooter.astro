@@ -1,17 +1,19 @@
 ---
-const { version = '0.1.0', lastUpdated = '—' } = Astro.props;
+import { site } from '../data/site';
+const { version = site.version, lastUpdated = '—' } = Astro.props;
+const copy = site.footer;
 ---
 
 <footer class="emnesia-footer">
   <div class="footer-status">
-    <span>EMNESIA v{version}</span>
-    <span>UPDATED {lastUpdated}</span>
-    <a href="/rss.xml">RSS</a>
-    <a href="/about/">CONTACT</a>
+    <span>{copy.versionPrefix}{version}</span>
+    <span>{copy.updatedPrefix} {lastUpdated}</span>
+    <a href="/rss.xml">{copy.rssLabel}</a>
+    <a href="/about/">{copy.contactLabel}</a>
   </div>
   <div class="footer-transmission">
     <span class="footer-transmission__line"></span>
-    <strong>END OF TRANSMISSION</strong>
+    <strong>{copy.endMessage}</strong>
     <span class="footer-transmission__dot"></span>
   </div>
 </footer>

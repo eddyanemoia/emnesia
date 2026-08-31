@@ -1,13 +1,7 @@
 ---
+import { site } from '../data/site';
 const { activePath = '/' } = Astro.props;
-const items = [
-  { href: '/', label: 'Home', icon: 'home', tone: 'cyan' },
-  { href: '/blog/', label: 'Blog', icon: 'blog', tone: 'amber' },
-  { href: '/about/', label: 'About', icon: 'id', tone: 'lavender' },
-  { href: '/links/', label: 'Links', icon: 'link', tone: 'mint' },
-  { href: '/games/', label: 'Games', icon: 'game', tone: 'coral' },
-  { href: '/tech/', label: 'Tech', icon: 'chip', tone: 'blue' },
-];
+const items = site.nav;
 ---
 
 <nav class="v2-nav" aria-label="Primary navigation">

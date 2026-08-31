@@ -1,15 +1,16 @@
 ---
 import EmnesiaShell from '../components/EmnesiaShell.astro';
+import { site } from '../data/site';
+const page = site.pages.about;
 const today = new Intl.DateTimeFormat('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' }).format(new Date());
 ---
-<EmnesiaShell activePath="/about/" version="0.1.0" lastUpdated={today}>
+<EmnesiaShell activePath="/about/" version={site.version} lastUpdated={today}>
   <section class="module module--page-intro">
     <div class="module__rim"></div>
-    <header class="module__header"><span class="module__eyebrow">ABOUT / USER FILE</span><span class="module__tiny">DRAFT</span></header>
+    <header class="module__header"><span class="module__eyebrow">{page.eyebrow}</span><span class="module__tiny">{page.microLabel}</span></header>
     <div class="lcd lcd--pale page-copy">
-      <h1>About Emnesia</h1>
-      <p>This page is deliberately simple in Version 1. Once the homepage feels right, this becomes the longer-form profile and site-about area.</p>
-      <p>For now, treat it as proof that the device shell and navigation can carry across the rest of the website.</p>
+      <h1>{page.title}</h1>
+      {page.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
     </div>
   </section>
 </EmnesiaShell>

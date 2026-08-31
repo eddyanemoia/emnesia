@@ -1,7 +1,12 @@
+---
+import { site } from '../data/site';
+const p = site.profile;
+---
+
 <section class="module module--user" aria-labelledby="user-id-title">
   <header class="module__header module__header--plate">
-    <span class="module__eyebrow">USER IDENTIFICATION</span>
-    <span class="indicator indicator--cyan" aria-label="Online"></span>
+    <span class="module__eyebrow" id="user-id-title">{p.sectionTitle}</span>
+    <span class="indicator indicator--cyan" aria-label={p.status}></span>
   </header>
 
   <div class="user-id">
@@ -11,20 +16,17 @@
         <span class="id-photo__head"></span>
         <span class="id-photo__shoulders"></span>
       </div>
-      <span class="id-photo__scan">CAM_01</span>
+      <span class="id-photo__scan">{p.cameraLabel}</span>
     </div>
 
     <div class="user-id__copy">
       <div class="lcd lcd--pale user-id__lcd">
-        <div class="lcd__row"><span>USER</span><strong>EDDY</strong></div>
-        <div class="lcd__row"><span>STATUS</span><strong>ONLINE</strong></div>
-        <div class="lcd__row"><span>ACCESS</span><strong>PERSONAL</strong></div>
+        <div class="lcd__row"><span>{p.nameLabel}</span><strong>{p.name}</strong></div>
+        <div class="lcd__row"><span>{p.statusLabel}</span><strong>{p.status}</strong></div>
+        <div class="lcd__row"><span>{p.accessLabel}</span><strong>{p.access}</strong></div>
       </div>
 
-      <p class="user-id__intro">
-        Hi — welcome to Emnesia. This is my little internet archive for whatever I’m
-        thinking about, playing with, learning, writing, or obsessing over at the moment.
-      </p>
+      <p class="user-id__intro">{p.intro}</p>
     </div>
   </div>
 </section>

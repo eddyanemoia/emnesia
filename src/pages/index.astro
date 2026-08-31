@@ -7,6 +7,7 @@ import Currently from '../components/Currently.astro';
 import SiteStatus from '../components/SiteStatus.astro';
 import MemoryArchive from '../components/MemoryArchive.astro';
 import CurrentFixation from '../components/CurrentFixation.astro';
+import { site } from '../data/site';
 
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
@@ -26,7 +27,7 @@ const today = new Intl.DateTimeFormat('en-US', {
 }).format(new Date());
 ---
 
-<EmnesiaShell activePath="/" version="0.2.0" lastUpdated={today}>
+<EmnesiaShell activePath="/" version={site.version} lastUpdated={today}>
   <div class="v2-dashboard">
     <div class="v2-dashboard__primary">
       <UserID />
@@ -36,7 +37,7 @@ const today = new Intl.DateTimeFormat('en-US', {
 
     <aside class="v2-dashboard__utility" aria-label="Emnesia utility column">
       <Currently />
-      <SiteStatus postCount={posts.length} lastUpdated={today} version="0.2.0" />
+      <SiteStatus postCount={posts.length} lastUpdated={today} version={site.version} />
       <CurrentFixation />
     </aside>
   </div>

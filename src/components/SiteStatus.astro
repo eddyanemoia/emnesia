@@ -1,18 +1,20 @@
 ---
-const { postCount = 0, lastUpdated = '—', version = '0.1.0' } = Astro.props;
+import { site } from '../data/site';
+const { postCount = 0, lastUpdated = '—', version = site.version } = Astro.props;
+const copy = site.status;
 ---
 
 <section class="module module--status" id="site-status" aria-labelledby="site-status-title">
   <header class="module__header module__header--plate">
     <span class="utility-badge utility-badge--lavender" aria-hidden="true">⌁</span>
-    <span class="module__eyebrow" id="site-status-title">SITE STATUS</span>
+    <span class="module__eyebrow" id="site-status-title">{copy.title}</span>
     <span class="indicator indicator--lavender" aria-hidden="true"></span>
   </header>
 
   <div class="lcd lcd--dark status-screen">
-    <div class="status-line"><span>LAST UPDATED</span><strong>{lastUpdated}</strong></div>
-    <div class="status-line"><span>POST COUNT</span><strong>{String(postCount).padStart(3, '0')}</strong></div>
-    <div class="status-line"><span>SITE VERSION</span><strong>v{version}</strong></div>
-    <div class="status-line"><span>STATE</span><strong>ONLINE</strong></div>
+    <div class="status-line"><span>{copy.labels.lastUpdated}</span><strong>{lastUpdated}</strong></div>
+    <div class="status-line"><span>{copy.labels.postCount}</span><strong>{String(postCount).padStart(3, '0')}</strong></div>
+    <div class="status-line"><span>{copy.labels.version}</span><strong>v{version}</strong></div>
+    <div class="status-line"><span>{copy.labels.state}</span><strong>{copy.state}</strong></div>
   </div>
 </section>

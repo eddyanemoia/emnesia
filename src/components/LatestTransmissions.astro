@@ -1,5 +1,7 @@
 ---
+import { site } from '../data/site';
 const { posts = [] } = Astro.props;
+const copy = site.latest;
 const formatDate = (value) => new Intl.DateTimeFormat('en-US', {
   month: '2-digit', day: '2-digit', year: '2-digit'
 }).format(new Date(value));
@@ -7,8 +9,8 @@ const formatDate = (value) => new Intl.DateTimeFormat('en-US', {
 
 <section class="module module--transmissions" aria-labelledby="latest-title">
   <header class="module__header module__header--etched">
-    <span class="module__eyebrow" id="latest-title">LATEST TRANSMISSIONS</span>
-    <span class="module__tiny">FEED / {String(posts.length).padStart(2, '0')}</span>
+    <span class="module__eyebrow" id="latest-title">{copy.title}</span>
+    <span class="module__tiny">{copy.feedLabel} / {String(posts.length).padStart(2, '0')}</span>
   </header>
 
   <div class="lcd lcd--dark transmission-feed">
@@ -20,8 +22,8 @@ const formatDate = (value) => new Intl.DateTimeFormat('en-US', {
       </a>
     )) : (
       <div class="transmission-empty">
-        <span>NO TRANSMISSIONS YET</span>
-        <small>drop a post into src/content/blog/</small>
+        <span>{copy.emptyTitle}</span>
+        <small>{copy.emptyNote}</small>
       </div>
     )}
   </div>

@@ -1,5 +1,7 @@
 ---
+import { site } from '../data/site';
 const { posts = [] } = Astro.props;
+const copy = site.archive;
 const years = [...new Set(posts.map((post) => new Date(post.date).getFullYear()))].sort((a, b) => b - a);
 const fallbackYear = new Date().getFullYear();
 const yearList = years.length ? years : [fallbackYear];
@@ -7,14 +9,14 @@ const yearList = years.length ? years : [fallbackYear];
 
 <section class="module module--archive" id="archive" aria-labelledby="archive-title" data-memory-archive>
   <header class="module__header module__header--plate">
-    <span class="module__eyebrow" id="archive-title">MEMORY / ARCHIVE</span>
-    <span class="module__tiny">STORED FILES</span>
+    <span class="module__eyebrow" id="archive-title">{copy.title}</span>
+    <span class="module__tiny">{copy.microLabel}</span>
   </header>
 
   <div class="archive-controls">
     <button class="micro-button micro-button--small" type="button" data-year-prev aria-label="Previous archive year">‹</button>
     <div class="lcd lcd--pale archive-year" aria-live="polite">
-      <span>YEAR</span>
+      <span>{copy.yearLabel}</span>
       <strong data-year-label>{yearList[0]}</strong>
     </div>
     <button class="micro-button micro-button--small" type="button" data-year-next aria-label="Next archive year">›</button>
@@ -27,12 +29,11 @@ const yearList = years.length ? years : [fallbackYear];
         <strong>{post.title}</strong>
       </a>
     )) : (
-      <div class="archive-empty">MEMORY BANK EMPTY</div>
+      <div class="archive-empty">{copy.empty}</div>
     )}
   </div>
 
-  <a class="hardware-link" href="/blog/">OPEN FULL ARCHIVE <span>↗</span></a>
-
+  <a class="hardware-link" href="/blog/">{copy.openLabel} <span>↗</span></a>
   <div class="archive-years" hidden>{yearList.map((year) => <span data-year-value>{year}</span>)}</div>
 </section>
 

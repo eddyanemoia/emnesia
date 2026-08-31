@@ -1,34 +1,34 @@
+---
+import { site } from '../data/site';
+const copy = site.currently;
+const pages = [copy.entries.slice(0, 2), copy.entries.slice(2, 4), copy.entries.slice(4, 5)];
+---
+
 <section class="module module--currently" id="currently" aria-labelledby="currently-title">
   <header class="module__header module__header--lcd">
     <span class="utility-badge utility-badge--cyan" aria-hidden="true">✦</span>
-    <span class="module__eyebrow" id="currently-title">CURRENTLY</span>
-    <span class="module__tiny">LIVE INDEX</span>
+    <span class="module__eyebrow" id="currently-title">{copy.title}</span>
+    <span class="module__tiny">{copy.microLabel}</span>
   </header>
 
   <div class="currently-device" data-currently>
     <button class="micro-button" type="button" data-current-prev aria-label="Previous currently page">‹</button>
     <div class="lcd lcd--pale currently-screen" aria-live="polite">
-      <div class="currently-screen__page is-active" data-current-page>
-        <span class="lcd-kicker">PLAYING</span>
-        <strong>replace me</strong>
-        <span class="lcd-kicker">WATCHING</span>
-        <strong>replace me</strong>
-      </div>
-      <div class="currently-screen__page" data-current-page>
-        <span class="lcd-kicker">READING</span>
-        <strong>replace me</strong>
-        <span class="lcd-kicker">USING</span>
-        <strong>replace me</strong>
-      </div>
-      <div class="currently-screen__page" data-current-page>
-        <span class="lcd-kicker">THINKING ABOUT</span>
-        <strong>replace me</strong>
-        <span class="currently-screen__micro">obsession slot // 03</span>
-      </div>
+      {pages.map((page, pageIndex) => (
+        <div class:list={['currently-screen__page', pageIndex === 0 && 'is-active']} data-current-page>
+          {page.map((entry) => (
+            <div class="currently-screen__item">
+              <span class="lcd-kicker">{entry.label}</span>
+              <strong>{entry.value}</strong>
+            </div>
+          ))}
+          {pageIndex === pages.length - 1 && <span class="currently-screen__micro">{copy.finalNote}</span>}
+        </div>
+      ))}
     </div>
     <button class="micro-button" type="button" data-current-next aria-label="Next currently page">›</button>
     <div class="page-dots" aria-hidden="true">
-      <i class="is-active"></i><i></i><i></i>
+      {pages.map((_, index) => <i class:list={[index === 0 && 'is-active']}></i>)}
     </div>
   </div>
 </section>
