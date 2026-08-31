@@ -1,0 +1,317 @@
+media:
+  input: public/images
+  output: /images
+  rename: safe
+  categories: [image]
+
+content:
+  - name: site
+    label: Homepage
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - name: logo
+        label: Logo text
+        type: string
+      - name: tagline
+        label: Tagline
+        type: string
+      - name: version
+        label: Site version
+        type: string
+
+      - name: profile
+        label: Profile / User ID
+        type: object
+        fields:
+          - name: sectionTitle
+            label: Section title
+            type: string
+          - name: cameraLabel
+            label: Camera label
+            type: string
+          - name: nameLabel
+            label: Name field label
+            type: string
+          - name: name
+            label: Name
+            type: string
+          - name: statusLabel
+            label: Status field label
+            type: string
+          - name: status
+            label: Status
+            type: string
+          - name: accessLabel
+            label: Access field label
+            type: string
+          - name: access
+            label: Access
+            type: string
+          - name: intro
+            label: Intro
+            type: text
+
+      - name: currently
+        label: Currently
+        type: object
+        fields:
+          - name: title
+            label: Section title
+            type: string
+          - name: microLabel
+            label: Small label
+            type: string
+          - name: entries
+            label: Entries
+            type: object
+            list:
+              min: 1
+              max: 8
+              collapsible:
+                collapsed: false
+                summary: "{label}: {value}"
+            fields:
+              - name: label
+                label: Category
+                type: string
+              - name: value
+                label: Text
+                type: string
+              - name: image
+                label: Image
+                type: image
+                required: false
+              - name: imageAlt
+                label: Image description
+                type: string
+                required: false
+                description: Short description for accessibility. Leave blank if there is no image.
+          - name: finalNote
+            label: Final note
+            type: string
+
+      - name: fixation
+        label: Current Fixation
+        type: object
+        fields:
+          - name: title
+            label: Section title
+            type: string
+          - name: microLabel
+            label: Small label
+            type: string
+          - name: items
+            label: Fixations
+            type: object
+            list:
+              min: 1
+              max: 8
+              collapsible:
+                collapsed: false
+                summary: "{kind}: {name}"
+            fields:
+              - name: kind
+                label: Object label
+                type: string
+              - name: name
+                label: Name
+                type: string
+              - name: note
+                label: Note
+                type: text
+
+      - name: scenicBanner
+        label: Scenic Banner
+        type: object
+        fields:
+          - name: caption
+            label: Caption
+            type: string
+          - name: alt
+            label: Image description
+            type: text
+
+      - name: latest
+        label: Latest Transmissions
+        type: object
+        fields:
+          - name: title
+            label: Section title
+            type: string
+          - name: feedLabel
+            label: Feed label
+            type: string
+          - name: emptyTitle
+            label: Empty-state title
+            type: string
+          - name: emptyNote
+            label: Empty-state note
+            type: string
+
+      - name: status
+        label: Site Status
+        type: object
+        fields:
+          - name: title
+            label: Section title
+            type: string
+          - name: state
+            label: Current state
+            type: string
+          - name: labels
+            label: Labels
+            type: object
+            fields:
+              - name: lastUpdated
+                label: Last updated label
+                type: string
+              - name: postCount
+                label: Post count label
+                type: string
+              - name: version
+                label: Version label
+                type: string
+              - name: state
+                label: State label
+                type: string
+
+      - name: archive
+        label: Memory / Archive
+        type: object
+        fields:
+          - name: title
+            label: Section title
+            type: string
+          - name: microLabel
+            label: Small label
+            type: string
+          - name: yearLabel
+            label: Year label
+            type: string
+          - name: empty
+            label: Empty-state text
+            type: string
+          - name: openLabel
+            label: Open archive button
+            type: string
+
+      - name: footer
+        label: Footer
+        type: object
+        fields:
+          - name: versionPrefix
+            label: Version prefix
+            type: string
+          - name: updatedPrefix
+            label: Updated prefix
+            type: string
+          - name: rssLabel
+            label: RSS label
+            type: string
+          - name: contactLabel
+            label: Contact label
+            type: string
+          - name: endMessage
+            label: End message
+            type: string
+
+      - name: nav
+        label: Navigation
+        type: object
+        list:
+          min: 1
+          max: 10
+          collapsible:
+            collapsed: true
+            summary: "{label} → {href}"
+        fields:
+          - name: href
+            label: URL
+            type: string
+          - name: label
+            label: Label
+            type: string
+          - name: icon
+            label: Icon key
+            type: string
+            readonly: true
+          - name: tone
+            label: Color tone
+            type: string
+            readonly: true
+
+      - name: pages
+        label: Other Pages
+        type: object
+        fields:
+          - name: about
+            label: About
+            type: object
+            fields:
+              - name: eyebrow
+                type: string
+              - name: microLabel
+                label: Small label
+                type: string
+              - name: title
+                type: string
+              - name: paragraphs
+                label: Paragraphs
+                type: text
+                list: true
+          - name: games
+            label: Games
+            type: object
+            fields:
+              - name: eyebrow
+                type: string
+              - name: microLabel
+                label: Small label
+                type: string
+              - name: title
+                type: string
+              - name: paragraphs
+                label: Paragraphs
+                type: text
+                list: true
+          - name: links
+            label: Links
+            type: object
+            fields:
+              - name: eyebrow
+                type: string
+              - name: microLabel
+                label: Small label
+                type: string
+              - name: title
+                type: string
+              - name: paragraphs
+                label: Paragraphs
+                type: text
+                list: true
+          - name: tech
+            label: Tech
+            type: object
+            fields:
+              - name: eyebrow
+                type: string
+              - name: microLabel
+                label: Small label
+                type: string
+              - name: title
+                type: string
+              - name: paragraphs
+                label: Paragraphs
+                type: text
+                list: true
+          - name: blog
+            label: Blog
+            type: object
+            fields:
+              - name: eyebrow
+                type: string
+              - name: microLabel
+                label: Small label
+                type: string
